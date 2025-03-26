@@ -74,7 +74,7 @@ def compare_simulation_theory(n_experiments=10000, lambda_param=8):
     
     # 计算泊松分布的理论PMF
     max_l = np.max(heads_count)
-    l_values = np.arange(0, max_l+1)
+    l_values = np.arange(0, max_l)
     pmf_values = (lambda_param ** l_values * np.exp(-lambda_param)) / factorial(l_values)
     
     # 绘制理论泊松分布曲线
