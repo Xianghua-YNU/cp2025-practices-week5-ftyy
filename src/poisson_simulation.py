@@ -15,7 +15,7 @@ def plot_poisson_pmf(lambda_param=8, max_l=20):
     plt.figure()  # 创建新图形
     
     # 生成 l 值的序列（不包含 max_l）
-    l_values = np.arange(0, max_l+1)
+    l_values = np.arange(0, max_l)
     
     # 计算泊松分布 PMF
     pmf_values = (lambda_param ** l_values * np.exp(-lambda_param)) / factorial(l_values)
