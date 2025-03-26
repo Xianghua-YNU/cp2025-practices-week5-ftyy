@@ -13,14 +13,18 @@ def random_walk_displacement(num_steps, num_simulations):
     numpy.ndarray: 形状为(2, num_simulations)的数组，表示每次模拟的最终位移
     """
     # TODO: 检查输入参数的有效性
-    
+    if num_steps < 1 or num_simulations < 1:
+        raise ValueError("num_steps和num_simulations必须大于0")
     # TODO: 实现随机行走算法
+    random_steps = np.random.choice([-1, 1], size=(2, num_simulations, num_steps))
+    final_displacements = random_steps.sum(axis=2)
+    return final_displacements
     # 提示：
     # 1. 使用 np.random.choice 生成随机步长 ([-1, 1])
     # 2. 生成形状为 (2, num_simulations, num_steps) 的数组
     # 3. 对步数维度求和得到最终位移
     
-    pass
+
 
 def plot_displacement_distribution(final_displacements, bins=30):
     """
@@ -34,7 +38,13 @@ def plot_displacement_distribution(final_displacements, bins=30):
     # 1. 计算每次模拟的最终位移
     # 2. 使用plt.hist绘制直方图
     # 3. 添加标题和标签
-    pass
+    displacements = np.sqrt(final_displacements[0]**2 + final_displacements[1]**2)
+    plt.hist(displacements, bins=bins, density=True, alpha=0.7, color='g')
+    plt.title("Displacement Distribution")
+    plt.xlabel("Displacement")
+    plt.ylabel("Frequency")
+    plt.grid(True)
+    plt.show()
 
 def plot_displacement_square_distribution(final_displacements, bins=30):
     """
@@ -48,7 +58,13 @@ def plot_displacement_square_distribution(final_displacements, bins=30):
     # 1. 计算位移平方
     # 2. 使用plt.hist绘制直方图
     # 3. 添加标题和标签
-    pass
+    displacements = np.sqrt(final_displacements[0]**2 + final_displacements[1]**2)
+    plt.hist(displacements**2, bins=bins, density=True, alpha=0.7, color='b')
+    plt.title("Displacement Square Distribution")
+    plt.xlabel("Displacement Square")
+    plt.ylabel("Frequency")
+    plt.grid(True)
+    plt.show()
 
 if __name__ == "__main__":
     # 可调整的参数
@@ -60,3 +76,7 @@ if __name__ == "__main__":
     # 1. 调用random_walk_displacement获取模拟结果
     # 2. 绘制位移分布直方图
     # 3. 绘制位移平方分布直方图
+    final_displacements = random_walk_displacement(num_steps, num_simulations)
+    plot_displacement_distribution(final_displacements, bins)
+    plot_displacement_square_distribution(final_displacements, bins)
+    

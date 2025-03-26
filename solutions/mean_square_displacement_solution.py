@@ -16,12 +16,25 @@ def random_walk_finals(num_steps=1000, num_walks=1000):
             - x_finals: 所有随机游走终点的x坐标数组
             - y_finals: 所有随机游走终点的y坐标数组
     """
+    # TODO: 实现随机游走算法
+    # 提示：
+    # 1. 使用np.zeros初始化数组
+    # 2. 使用np.random.choice生成随机步长
+    # 3. 使用np.sum计算总位移
+
+    # 初始化终点坐标数组
     x_finals = np.zeros(num_walks)
     y_finals = np.zeros(num_walks)
+
+    # 模拟随机游走
     for i in range(num_walks):
-        x_finals[i] = np.sum(np.random.choice([-1,1],num_steps))
-        y_finals[i] = np.sum(np.random.choice([-1,1],num_steps))
-    return (x_finals,y_finals)
+        x_steps = np.random.choice([-1, 1], size=num_steps)
+        y_steps = np.random.choice([-1, 1], size=num_steps)
+        x_finals[i] = np.sum(x_steps)
+        y_finals[i] = np.sum(y_steps)
+    
+    return x_finals, y_finals
+    
 
 
 def calculate_mean_square_displacement():
@@ -35,15 +48,23 @@ def calculate_mean_square_displacement():
             - steps: 步数数组 [1000, 2000, 3000, 4000]
             - msd: 对应的均方位移数组
     """
+    # TODO: 实现均方位移计算
+    # 提示：
+    # 1. 使用random_walk_finals获取终点坐标
+    # 2. 计算位移平方和
+    # 3. 使用np.mean计算平均值
+
     steps = np.array([1000, 2000, 3000, 4000])
     msd = []
     
-    for i in steps:
-        x_finals, y_finals = random_walk_finals(num_steps=i)  # Fixed function name
-        ds = x_finals**2 + y_finals**2
-        msd.append(np.mean(ds))
+    for num_steps in steps:
+        x_finals, y_finals = random_walk_finals(num_steps=num_steps, num_walks=1000)
+        displacement_squared = x_finals**2 + y_finals**2
+        msd.append(np.mean(displacement_squared))
     
     return steps, np.array(msd)
+    
+
 
 def analyze_step_dependence():
     """分析均方位移与步数的关系，并进行最小二乘拟合
@@ -54,17 +75,29 @@ def analyze_step_dependence():
             - msd: 对应的均方位移数组
             - k: 拟合得到的比例系数
     """
-    # 获取步数和均方位移数据
+    # TODO: 实现数据分析
+    # 提示：
+    # 1. 调用calculate_mean_square_displacement获取数据
+    # 2. 使用最小二乘法拟合 msd = k * steps
+    # 3. k = Σ(N·msd)/Σ(N²)
     steps, msd = calculate_mean_square_displacement()
-    msd = np.array(msd)
     
-    # 最小二乘拟合（强制过原点）
-    # 理论上 msd = k * steps，k应该接近2
+    # 最小二乘拟合 msd = k * steps
     k = np.sum(steps * msd) / np.sum(steps**2)
     
     return steps, msd, k
 
+    
+
+
 if __name__ == "__main__":
+    # TODO: 完成主程序
+    # 提示：
+    # 1. 获取数据和拟合结果
+    # 2. 绘制实验数据点和理论曲线
+    # 3. 设置图形属性
+    # 4. 打印数据分析结果
+
     # 获取数据和拟合结果
     steps, msd, k = analyze_step_dependence()
     
