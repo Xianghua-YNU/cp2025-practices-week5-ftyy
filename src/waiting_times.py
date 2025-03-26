@@ -11,8 +11,11 @@ def generate_coin_sequence(n_flips, p_head=0.08):
     返回:
         ndarray: 一个长度为n_flips的一维数组，其中1表示正面，0表示反面
     """
-    return np.random.choice([0, 1], size=n_flips, p=[1-p_head, p_head])
-
+    return np.random.choice(
+        [0, 1], 
+        size=int(n_flips), 
+        p=[1-float(p_head), float(p_head)]
+    )
 def calculate_waiting_times(coin_sequence):
     """计算两次正面之间的等待时间（反面次数）
     
@@ -22,11 +25,12 @@ def calculate_waiting_times(coin_sequence):
     返回:
         ndarray: 一个数组，包含所有等待时间（即连续两次正面之间的反面次数）
     """
-    heads_indices = np.nonzero(coin_sequence == 1)[0]
+    heads_indices = np.where(coin_sequence == 1)[0]
     if len(heads_indices) < 2:
-        return np.array([])
-    return np.diff(heads_indices) - 1
-
+        return np.array([], dtype=int)  # 返回空数组而非None
+    
+    waiting_times = np.diff(heads_indices) - 1
+    return waiting_times.astype(int)  # 确保返回整数数组
 def plot_waiting_time_histogram(waiting_times, log_scale=False, n_flips=None):
     """绘制等待时间直方图
     
@@ -69,8 +73,8 @@ def analyze_waiting_time(waiting_times, p_head=0.08):
         }
     
     return {
-        "mean": np.mean(waiting_times),
-        "std": np.std(waiting_times),
+        "mean": float(np.mean(waiting_times)),
+        "std": float(np.std(waiting_times)),
         "theoretical_mean": (1-p_head)/p_head,
         "exponential_mean": 1/p_head
     }
