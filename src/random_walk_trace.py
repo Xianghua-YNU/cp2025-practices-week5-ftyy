@@ -17,7 +17,6 @@ def random_walk_2d(steps):
     # 3. 使用 cumsum() 计算累积和得到轨迹
     # 生成随机步长
     # 生成x和y方向的随机步长（-1或1)
-    def random_walk_2d(steps):
     x_steps = np.random.choice([-1, 1], size=steps)
     y_steps = np.random.choice([-1, 1], size=steps)
     x_coords = np.cumsum(x_steps)  # 不插入起点，长度=steps
