@@ -15,6 +15,8 @@ def plot_poisson_pmf(lambda_param=8, max_l=20):
     # 2. 使用给定公式计算PMF
     # 3. 使用plt制图形并设置标签
     # 生成l值的序列
+    plt.figure()  # 创建新图形
+    
     l_values = np.arange(0, max_l+1)
     
     # 计算泊松分布PMF
@@ -22,12 +24,14 @@ def plot_poisson_pmf(lambda_param=8, max_l=20):
     
     # 绘制PMF图形
     plt.plot(l_values, pmf_values, 'bo', label=f'λ = {lambda_param}')
-    plt.title("poisson pmf")
+    plt.title("Poisson PMF")
     plt.xlabel("l")
     plt.ylabel("P(X=l)")
     plt.xticks(l_values)
     plt.grid(True)
     plt.legend()
+    
+    return pmf_values  # 返回 PMF 值
 
 def simulate_coin_flips(n_experiments=10000, n_flips=100, p_head=0.08):
     """模拟多组抛硬币实验
