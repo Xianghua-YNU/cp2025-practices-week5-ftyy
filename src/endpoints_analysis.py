@@ -29,8 +29,8 @@ def random_walk_finals(num_steps, num_walks):
     y_finals = np.zeros(num_walks)
     
     for i in range(num_walks):
-        x_steps = np.random.choice([-1, 1], size=num_steps)
-        y_steps = np.random.choice([-1, 1], size=num_steps)
+        x_steps = np.random.choice([-1, 1], num_steps)
+        y_steps = np.random.choice([-1, 1], num_steps)
         
         x_finals[i] = np.sum(x_steps)
         y_finals[i] = np.sum(y_steps)
