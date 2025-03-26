@@ -25,8 +25,8 @@ def random_walk_2d(steps):
     y_coords = np.cumsum(y_steps)
     
     # 在开头插入原点(0,0)
-    x_coords = np.insert(x_coords, 0, 0)
-    y_coords = np.insert(y_coords, 0, 0)
+    #x_coords = np.insert(x_coords, 0, 0)
+    #y_coords = np.insert(y_coords, 0, 0)
     
     return x_coords, y_coords
 def plot_single_walk(path):
