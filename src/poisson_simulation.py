@@ -8,23 +8,21 @@ def plot_poisson_pmf(lambda_param=8, max_l=20):
     参数:
         lambda_param (float): 泊松分布参数λ
         max_l (int): 最大的l值
+        
+    返回:
+        ndarray: 泊松分布的PMF值
     """
-    # TODO: 实现泊松分布概率质量函数的计算和绘制
-    # 提示：
-    # 1. 使用np.arange生成l值序列
-    # 2. 使用给定公式计算PMF
-    # 3. 使用plt制图形并设置标签
-    # 生成l值的序列
     plt.figure()  # 创建新图形
     
-    l_values = np.arange(0, max_l+1)
+    # 生成 l 值的序列（不包含 max_l）
+    l_values = np.arange(0, max_l)
     
-    # 计算泊松分布PMF
+    # 计算泊松分布 PMF
     pmf_values = (lambda_param ** l_values * np.exp(-lambda_param)) / factorial(l_values)
     
-    # 绘制PMF图形
+    # 绘制 PMF 图形
     plt.plot(l_values, pmf_values, 'bo', label=f'λ = {lambda_param}')
-    plt.title("Poisson PMF")
+    plt.title(f"Poisson Probability Mass Function (λ={lambda_param})")  # 修改标题
     plt.xlabel("l")
     plt.ylabel("P(X=l)")
     plt.xticks(l_values)
