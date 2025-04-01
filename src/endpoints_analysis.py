@@ -25,7 +25,17 @@ def random_walk_finals(num_steps, num_walks):
     # 1. 使用np.zeros初始化坐标数组
     # 2. 对每次游走使用np.random.choice生成±1的随机步长
     # 3. 使用np.sum计算总位移
-    pass
+    x_finals = np.zeros(num_walks)
+    y_finals = np.zeros(num_walks)
+    
+    for i in range(num_walks):
+        x_steps = np.random.choice([-1, 1], num_steps)
+        y_steps = np.random.choice([-1, 1], num_steps)
+        
+        x_finals[i] = np.sum(x_steps)
+        y_finals[i] = np.sum(y_steps)
+    
+    return x_finals, y_finals
 
 def plot_endpoints_distribution(endpoints):
     """绘制二维随机游走终点的空间分布散点图
@@ -48,7 +58,13 @@ def plot_endpoints_distribution(endpoints):
     # 1. 使用endpoints解包获取x和y坐标
     # 2. 使用plt.scatter绘制散点图
     # 3. 设置坐标轴比例、标题和标签
-    pass
+    x_coords, y_coords = endpoints
+    
+    plt.scatter(x_coords, y_coords, alpha=0.5)
+    plt.gca().set_aspect('equal', adjustable='box')
+    plt.title("2D Random Walk Endpoints")
+    plt.xlabel("xlabel")
+    plt.ylabel("ylabel")
 
 def analyze_x_distribution(endpoints):
     """分析二维随机游走终点x坐标的统计特性
@@ -79,7 +95,27 @@ def analyze_x_distribution(endpoints):
     # 3. 绘制直方图
     # 4. 添加理论正态分布曲线
     # 5. 设置图形属性并打印统计结果
-    pass
+    x_coords, _ = endpoints
+    
+    # 计算均值和方差
+    mean = np.mean(x_coords)
+    variance = np.var(x_coords, ddof=1)
+    
+    # 绘制直方图
+    plt.hist(x_coords, bins=30, density=True, alpha=0.6, color='g')
+    
+    # 绘制正态分布曲线
+    from scipy.stats import norm
+    xmin, xmax = plt.xlim()
+    x = np.linspace(xmin, xmax, 100)
+    p = norm.pdf(x, mean, np.sqrt(variance))
+    plt.plot(x, p, 'k', linewidth=2)
+    
+    plt.title("x coordinate distribution and theoretical normal distribution")
+    plt.xlabel("xlabel")
+    plt.ylabel("PDF")
+    
+    print(f"均值: {mean:.2f}, 方差: {variance:.2f}")
 
 if __name__ == "__main__":
     np.random.seed(42)  # 设置随机种子以保证可重复性
